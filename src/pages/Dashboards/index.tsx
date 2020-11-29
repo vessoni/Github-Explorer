@@ -1,65 +1,65 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
+import api from '../../services/api';
 
 import logoImg from '../../assets/logo.svg';
 
 import { Title, Form, Repositories } from './styles';
+import Repository from '../Repository';
 
-const Dashboard: React.FC = () => (
-  <>
-    <img src={logoImg} alt="Github Explorer" />
-    <Title>Explore Repositorios no Github</Title>
+interface Repository{
+  full_name: string;
+  description: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  }
+}
 
-    <Form action="">
-      <input placeholder="Digite o nome do repositorio" />
-      <button type="submit">Pesquisar</button>
-    </Form>
+const Dashboard: React.FC = () => {
+  const [newRepo, setNewRepo] = useState('');
+  const [repositories, setRepositories] = useState<Repository[]>([]);
 
-    <Repositories>
-      <a href="teste">
-        <img
-          src="https://avatars3.githubusercontent.com/u/4910383?s=460&u=83c4a27c7b7242163c6568a7e0535519ecde2eba&v=4"
-          alt="Alexandre Vessoni"
-        />
-        <div>
-          <strong>
-            Teste/Alexandre
-          </strong>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        </div>
-        <FiChevronRight size={20} />
-      </a>
+  async function handleAddRepository(event: FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
 
-      <a href="teste">
-        <img
-          src="https://avatars3.githubusercontent.com/u/4910383?s=460&u=83c4a27c7b7242163c6568a7e0535519ecde2eba&v=4"
-          alt="Alexandre Vessoni"
-        />
-        <div>
-          <strong>
-            Teste/Alexandre
-          </strong>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        </div>
-        <FiChevronRight size={20} />
-      </a>
+    const response = await api.get<Repository>(`repos/${newRepo}`);
 
-      <a href="teste">
-        <img
-          src="https://avatars3.githubusercontent.com/u/4910383?s=460&u=83c4a27c7b7242163c6568a7e0535519ecde2eba&v=4"
-          alt="Alexandre Vessoni"
-        />
-        <div>
-          <strong>
-            Teste/Alexandre
-          </strong>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-        </div>
-        <FiChevronRight size={20} />
-      </a>
-    </Repositories>
+    const repository = response.data;
+    setRepositories([...repositories, repository]);
+    setNewRepo('');
+  }
 
-  </>
-);
+  return (
+    <>
+      <img src={logoImg} alt="Github Explorer" />
+      <Title>Explore Repositorios no Github</Title>
+
+      <Form onSubmit={handleAddRepository}>
+        <input placeholder="Digite o nome do repositorio" value={newRepo} onChange={(e) => setNewRepo(e.target.value)} />
+        <button type="submit">Pesquisar</button>
+      </Form>
+
+      <Repositories>
+        {repositories.map((repository) => (
+          <a key={repository.full_name} href="teste">
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
+            <div>
+              <strong>
+                {repository.full_name}
+              </strong>
+              <p>{repository.description}</p>
+            </div>
+            <FiChevronRight size={20} />
+          </a>
+        ))}
+      </Repositories>
+
+    </>
+  );
+};
 
 export default Dashboard;
