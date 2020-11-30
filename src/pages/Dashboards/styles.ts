@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { shade } from 'polished';
 
-interface FormProps{
+interface FormProps {
   hasError: boolean;
 }
 
@@ -11,14 +11,14 @@ export const Title = styled.h1`
   max-width: 450px;
   line-height: 56px;
 
-  margin-top: 80px
+  margin-top: 80px;
 `;
 
 export const Form = styled.form<FormProps>`
   margin-top: 40px;
   max-width: 700px;
 
-  display:flex;
+  display: flex;
   input {
     flex: 1;
     height: 70px;
@@ -27,38 +27,37 @@ export const Form = styled.form<FormProps>`
     border-radius: 5px 0 0 5px;
     color: #3a3a3a;
 
-    border: 2px solid #FFF;
+    border: 2px solid #fff;
     border-right: 0;
 
-    ${(props) => props.hasError && css`border-color #C53030;`}
+    ${props => props.hasError && css`border-color #C53030;`}
 
-    &::place-holder{
-      color: #A8A8B3;
+    &::place-holder {
+      color: #a8a8b3;
     }
   }
 
   button {
     width: 210px;
     height: 70px;
-    background: #04D361;
+    background: #04d361;
     border-radius: 0 5px 5px 0;
     border: 0;
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
     transition: background-color 0.2s;
 
     &:hover {
-      background: ${shade(0.2, '#04D361')}
+      background: ${shade(0.2, '#04D361')};
     }
   }
-
 `;
 
 export const Repositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
 
-  a{
+  a {
     background: #ffff;
     border-radius: 5px;
     width: 100%;
@@ -70,50 +69,45 @@ export const Repositories = styled.div`
     align-items: center;
     transition: transform 0.2s;
 
-
     & + a {
       margin-top: 16px;
     }
 
-
     &:hover {
-     transform: translateX(10px);
-  }
-
-
-  img {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-  }
-
-  div {
-    margin: 16px;
-    flex: 1;
-
-    strong {
-      font-size: 20px;
-      color: #3D3D4D;
+      transform: translateX(10px);
     }
 
-    p{
-      font-size: 18px;
-      color: #A8A8B3;
-      margin-top: 4px;
+    img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+
+    div {
+      margin: 16px;
+      flex: 1;
+
+      strong {
+        font-size: 20px;
+        color: #3d3d4d;
+      }
+
+      p {
+        font-size: 18px;
+        color: #a8a8b3;
+        margin-top: 4px;
+      }
+    }
+
+    svg {
+      margin-left: auto;
+      color: #cbcbd6;
     }
   }
-
-  svg {
-    margin-left: auto;
-    color: #cbcbd6;
-  }
-
-}
-
 `;
 
 export const Error = styled.span`
   display: block;
-  color: #C53030;
+  color: #c53030;
   margin-top: 8px;
 `;

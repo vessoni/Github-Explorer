@@ -8,11 +8,7 @@ interface RepositoryParams {
 const Repository: React.FC = () => {
   const { params } = useRouteMatch<RepositoryParams>();
 
-  return (
-    <h1>
-      Repository: {params.repository}
-    </h1>
-  );
+  return <h1>Repository: {params.repository}</h1>;
 };
 
 export default Repository;
